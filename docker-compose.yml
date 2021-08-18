@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+  web:
+    build:
+      context: ./docker/apache
+      dockerfile: Dockerfile
+      #image: php5.3-apache:latest #My locally built version
+    ports:
+     - "${APP_PORT}:80"
+    volumes:
+     - .:/var/www/html
+    networks:
+     - unotifi
+  mysql:
+    image: mysql:5.6
+    ports:
+     - "${MYSQL_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_USER_PASSWORD}"
+    networks:
+     - unotifi
+networks:
+  unotifi:
